@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Godseraph's Blog</title>
+ <link href="http://godseraph.github.io/" rel="self"/>
+ <link href="http://godseraph.github.io"/>
+ <updated>2013-08-11T23:29:04+08:00</updated>
+ <id>http://godseraph.github.io</id>
+ <author>
+   <name>Godseraph</name>
+   <email>wangjch@sina.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>Domino与PHP实现SSO的初步研究</title>
+   <link href="http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/11/Domino-php-sso"/>
+   <updated>2013-08-11T00:00:00+08:00</updated>
+   <id>http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/11/Domino-php-sso</id>
+   <content type="html">&lt;h2 id='id1'&gt;前提条件&lt;/h2&gt;
+
+&lt;p&gt;Domino服务器与php服务器属于同一个域 例如：oa.abc.com mis.abc.com&lt;/p&gt;
+
+&lt;h2 id='dominocookiephp'&gt;服务器端获取已经Domino认证的页面上的Cookie，并设置到php的页面中&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+setcookie(&amp;#39;DomAuthSessId&amp;#39;,&amp;#39;C08BB3ACD62CCBAE3CDE0D0048E2D21E&amp;#39;,0,&amp;#39;&amp;#39;);
+?&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='cookie'&gt;验证页面中已经设置了正确的Cookie&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+echo $_COOKIE[&amp;#39;DomAuthSessId&amp;#39;];
+?&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='domino'&gt;验证浏览器访问Domino服务器，用户正确验证&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;oa.abc.com/oainterface.nsf/test?openagent&lt;/code&gt;&lt;/pre&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>使用Nginx搭建流媒体服务器</title>
+   <link href="http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/09/Hello-Nginx"/>
+   <updated>2013-08-09T00:00:00+08:00</updated>
+   <id>http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/09/Hello-Nginx</id>
+   <content type="html">&lt;h2 id='ppa_nginx_'&gt;使用官方PPA安装 Nginx 最新版本，使用以下命令：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo add-apt-repository ppa:nginx/stable
+sudo apt-get update
+sudo apt-get install nginx
+
+安装pcre
+sudo apt-get install libpcre3 libpcre3-dev&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;所有的配置文件都在/etc/nginx下，并且每个虚拟主机已经安排在了×/etc/nginx/sites-available下×,其中的default文件是虚拟主机的配置文件 默认的虚拟主机的目录设置在了×/usr/share/nginx/html× 程序文件在/usr/sbin/nginx 日志放在了/var/log/nginx中 并已经在/etc/init.d/下创建了启动脚本nginx Nginx相关控制命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;启动 Nginx：
+    sudo /etc/init.d/nginx start
+
+浏览器浏览运行情况输入：http://localhost ;如果现实”Welcome to nginx!”，表明你的 Nginx 服务器安装成功！
+关闭 Nginx：sudo /etc/init.d/nginx stop;
+重启 nginx：sudo /etc/init.d/nginx restart;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='permission_denied_'&gt;Permission denied 问题的解决办法&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;修改目录所有者为www-data即可。
+chown -R www-data:www-data proxy_temp&lt;/code&gt;&lt;/pre&gt;</content>
+ </entry>
+ 
+ 
+</feed>

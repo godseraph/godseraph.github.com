@@ -1,0 +1,11 @@
+---
+layout: post
+title: Domino与PHP实现SSO的初步研究
+category : Web技术
+tagline: "学习与实践"
+tags : [SSO, Domino, PHP, tutorial]
+---
+{% include JB/setup %}
+
+
+

@@ -1,0 +1,12 @@
+
+http://godseraph.github.io/sitemap.txt
+http://godseraph.github.io/pages.html
+http://godseraph.github.io/categories.html
+http://godseraph.github.io/index.html
+http://godseraph.github.io/atom.xml
+http://godseraph.github.io/rss.xml
+http://godseraph.github.io/tags.html
+http://godseraph.github.io/archive.html
+
+http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/11/Domino-php-sso
+http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/09/Hello-Nginx

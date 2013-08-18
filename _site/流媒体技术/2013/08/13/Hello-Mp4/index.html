@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>使用Nginx搭建流媒体服务器</title>
+    <title>Ubuntu上视频转换的初步研究</title>
     
     <meta name="author" content="Godseraph">
 
@@ -106,37 +106,41 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>使用Nginx搭建流媒体服务器 <small>学习与实践</small></h1>
+  <h1>Ubuntu上视频转换的初步研究 <small>学习与实践</small></h1>
 </div>
 
 <div class="row-fluid post-full">
   <div class="span12">
     <div class="date">
-      <span>09 August 2013</span>
+      <span>13 August 2013</span>
     </div>
     <div class="content">
-      <h2 id='ppa_nginx_'>使用官方PPA安装 Nginx 最新版本，使用以下命令：</h2>
+      <h2 id='convert_mkv_to_mp4_in_ubuntu'>Convert MKV to MP4 in Ubuntu：</h2>
 
-<pre><code>sudo add-apt-repository ppa:nginx/stable
-sudo apt-get update
-sudo apt-get install nginx
+<p>安装libav工具</p>
 
-安装pcre
-sudo apt-get install libpcre3 libpcre3-dev</code></pre>
+<pre><code>sudo apt-get install libav-tools</code></pre>
 
-<p>所有的配置文件都在/etc/nginx下，并且每个虚拟主机已经安排在了×/etc/nginx/sites-available下×,其中的default文件是虚拟主机的配置文件 默认的虚拟主机的目录设置在了×/usr/share/nginx/html× 程序文件在/usr/sbin/nginx 日志放在了/var/log/nginx中 并已经在/etc/init.d/下创建了启动脚本nginx Nginx相关控制命令：</p>
+<p>不改变编码格式，将mkv转换为mp4格式</p>
 
-<pre><code>启动 Nginx：
-    sudo /etc/init.d/nginx start
+<pre><code>avconv -i input.mkv -codec copy output.mp4
 
-浏览器浏览运行情况输入：http://localhost ;如果现实”Welcome to nginx!”，表明你的 Nginx 服务器安装成功！
-关闭 Nginx：sudo /etc/init.d/nginx stop;
-重启 nginx：sudo /etc/init.d/nginx restart;</code></pre>
+测试时使用了《独立日》720p的mkv文件，转换后的mp4文件在VLC中正常播放且有声音，使用jwplayer播放ngnix输出的流媒体时没有声音，怀疑时原文件为6声道，jwplayer不支持。</code></pre>
 
-<h2 id='permission_denied_'>Permission denied 问题的解决办法</h2>
+<p><em>查看mkv文件的封装信息</em></p>
 
-<pre><code>修改目录所有者为www-data即可。
-chown -R www-data:www-data proxy_temp</code></pre>
+<pre><code>sudo apt-get install gpac mkvtoolnix ffmpeg
+mkvinfo xxx.mkv</code></pre>
+
+<h2 id='vlc'>使用VLC控件在浏览器上播放流媒体</h2>
+
+<pre><code>&lt;object classid=&quot;clsid:E23FE9C6-778E-49D4-B537-38FCDE4887D8&quot; codebase=&quot;http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab&quot;
+    width=&quot;&lt;?php echo $_GET[&quot;height&quot;]; ?&gt;&quot; height=&quot;&lt;?php echo $_GET[&quot;width&quot;]; ?&gt;&quot; id=&quot;vlc&quot; events=&quot;True&quot;&gt;
+&lt;param name=&quot;Src&quot; value=&quot;&quot; /&gt;
+&lt;param name=&quot;ShowDisplay&quot; value=&quot;True&quot; /&gt;
+&lt;param name=&quot;Loop&quot; value=&quot;False&quot; /&gt;
+&lt;param name=&quot;AutoPlay&quot; value=&quot;False&quot; /&gt;
+&lt;/object&gt;</code></pre>
     </div>
 
   
@@ -148,8 +152,8 @@ chown -R www-data:www-data proxy_temp</code></pre>
 
   
      
-    	<li><a href="/categories.html#web技术-ref">
-    		web技术 <span>3</span>
+    	<li><a href="/categories.html#流媒体技术-ref">
+    		流媒体技术 <span>1</span>
     	</a></li>
     
   
@@ -173,7 +177,7 @@ chown -R www-data:www-data proxy_temp</code></pre>
      
     	<li><a href="/tags.html#Ubuntu-ref">Ubuntu <span>3</span></a></li>
      
-    	<li><a href="/tags.html#tutorial-ref">tutorial <span>2</span></a></li>
+    	<li><a href="/tags.html#mp4-ref">mp4 <span>1</span></a></li>
     
   
 
@@ -186,11 +190,11 @@ chown -R www-data:www-data proxy_temp</code></pre>
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="/2013/08/08/Mp4-demo-2" title="Mp4Demo:独立日">&larr; Previous</a></li>
+        <li class="prev"><a href="/web%E6%8A%80%E6%9C%AF/2013/08/11/Domino-php-sso" title="Domino与PHP实现SSO的初步研究">&larr; Previous</a></li>
       
         <li><a href="/archive.html">Archive</a></li>
       
-        <li class="next"><a href="/web%E6%8A%80%E6%9C%AF/2013/08/11/Domino-php-sso" title="Domino与PHP实现SSO的初步研究">Next &rarr;</a></li>
+        <li class="next"><a href="/web%E6%8A%80%E6%9C%AF/2013/08/14/Hello-Rails" title="Ubuntu 12.04 Server LTS安装部署Nginx+MySQL+Ruby1.9.3+Rails3.2">Next &rarr;</a></li>
       
       </ul>
     </div>

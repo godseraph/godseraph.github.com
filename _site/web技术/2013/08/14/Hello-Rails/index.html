@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>使用Nginx搭建流媒体服务器</title>
+    <title>Ubuntu 12.04 Server LTS安装部署Nginx+MySQL+Ruby1.9.3+Rails3.2</title>
     
     <meta name="author" content="Godseraph">
 
@@ -106,37 +106,65 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>使用Nginx搭建流媒体服务器 <small>学习与实践</small></h1>
+  <h1>Ubuntu 12.04 Server LTS安装部署Nginx+MySQL+Ruby1.9.3+Rails3.2 <small>学习与实践</small></h1>
 </div>
 
 <div class="row-fluid post-full">
   <div class="span12">
     <div class="date">
-      <span>09 August 2013</span>
+      <span>14 August 2013</span>
     </div>
     <div class="content">
-      <h2 id='ppa_nginx_'>使用官方PPA安装 Nginx 最新版本，使用以下命令：</h2>
+      <h2 id='1'>1、准备工作:</h2>
 
-<pre><code>sudo add-apt-repository ppa:nginx/stable
-sudo apt-get update
-sudo apt-get install nginx
+<p>//更新源</p>
 
-安装pcre
-sudo apt-get install libpcre3 libpcre3-dev</code></pre>
+<pre><code>$sudo apt-get update
+$sudo apt-get upgrade</code></pre>
 
-<p>所有的配置文件都在/etc/nginx下，并且每个虚拟主机已经安排在了×/etc/nginx/sites-available下×,其中的default文件是虚拟主机的配置文件 默认的虚拟主机的目录设置在了×/usr/share/nginx/html× 程序文件在/usr/sbin/nginx 日志放在了/var/log/nginx中 并已经在/etc/init.d/下创建了启动脚本nginx Nginx相关控制命令：</p>
+<p>//矫正时区</p>
 
-<pre><code>启动 Nginx：
-    sudo /etc/init.d/nginx start
+<pre><code>$sudo dpkg-reconfigure tzdata
+选择Asia,然后选择shanghai。</code></pre>
 
-浏览器浏览运行情况输入：http://localhost ;如果现实”Welcome to nginx!”，表明你的 Nginx 服务器安装成功！
-关闭 Nginx：sudo /etc/init.d/nginx stop;
-重启 nginx：sudo /etc/init.d/nginx restart;</code></pre>
+<h2 id='2linux'>2、安装所需的linux包:</h2>
 
-<h2 id='permission_denied_'>Permission denied 问题的解决办法</h2>
+<pre><code>$sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev  libxml2-dev libxslt-dev autoconf libc6-dev zlib1g-dev libssl-dev build-essential curl git-core libc6-dev g++ gcc</code></pre>
 
-<pre><code>修改目录所有者为www-data即可。
-chown -R www-data:www-data proxy_temp</code></pre>
+<h2 id='3rails'>3、为Rails添加用户和组:</h2>
+
+<pre><code>$sudo addgroup passenger			
+$sudo adduser godseraph			//已有此用户，则此步省略
+$sudo usermod -G passenger,www-data,sudo godseraph
+$su - godseraph</code></pre>
+
+<h2 id='4ruby193'>4、安装Ruby1.9.3:</h2>
+
+<pre><code>$bash &lt; &lt;(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)     //安装rvm控制ruby的版本
+$source .bashrc      //首次需要加载rvm
+$rvm –v             //查看rvm的版本
+$sudo vi ~/.bashrc  //打开bashrc文件，添加以下代码：
+    [[ -s &quot;$HOME/.rvm/scripts/rvm&quot; ]] &amp;&amp; . &quot;$HOME/.rvm/scripts/rvm&quot; 
+$source ～/.bashrc  //打开新终端运行bashrc
+$rvm install 1.9.3  //安装ruby,1.9.3为ruby的版本
+$rvm use 1.9.3 default  //设置1.9.3为默认的版本
+$ruby –v                //查看当前ruby的版本</code></pre>
+
+<h2 id='5rubygemsrails32'>5、安装rubygems,Rails3.2</h2>
+
+<p>//安装libssl支持</p>
+
+<pre><code>$sudo apt-get install openssl libssl-dev 
+$sudo apt-get install libopenssl-ruby1.9.1 </code></pre>
+
+<p>//安装rubygems</p>
+
+<pre><code>$rvm rubygems current		//Installing rubygems-2.0.6 for ruby-1.9.3-p448
+$gem install rails   		//安装rails最新版 
+$gem install rails --version 3.2.14	//安装rails 3.2.14版
+$rails -v   			//查看已安装rails版本,我的是rails 3.2.</code></pre>
+
+<p>参考资料： http://blog.sina.com.cn/s/blog_5d239b7f01019km9.html http://blog.it580.com/install-ruby-on-rails-on-ubuntu-12-04-1-lts http://ruby-china.org/wiki/install-rails-on-ubuntu-12-04-server</p>
     </div>
 
   
@@ -167,13 +195,11 @@ chown -R www-data:www-data proxy_temp</code></pre>
 
   
      
-    	<li><a href="/tags.html#流媒体-ref">流媒体 <span>2</span></a></li>
+    	<li><a href="/tags.html#ROR-ref">ROR <span>1</span></a></li>
      
     	<li><a href="/tags.html#Nginx-ref">Nginx <span>3</span></a></li>
      
     	<li><a href="/tags.html#Ubuntu-ref">Ubuntu <span>3</span></a></li>
-     
-    	<li><a href="/tags.html#tutorial-ref">tutorial <span>2</span></a></li>
     
   
 
@@ -186,11 +212,11 @@ chown -R www-data:www-data proxy_temp</code></pre>
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="/2013/08/08/Mp4-demo-2" title="Mp4Demo:独立日">&larr; Previous</a></li>
+        <li class="prev"><a href="/%E6%B5%81%E5%AA%92%E4%BD%93%E6%8A%80%E6%9C%AF/2013/08/13/Hello-Mp4" title="Ubuntu上视频转换的初步研究">&larr; Previous</a></li>
       
         <li><a href="/archive.html">Archive</a></li>
       
-        <li class="next"><a href="/web%E6%8A%80%E6%9C%AF/2013/08/11/Domino-php-sso" title="Domino与PHP实现SSO的初步研究">Next &rarr;</a></li>
+        <li class="next disabled"><a>Next &rarr;</a>
       
       </ul>
     </div>

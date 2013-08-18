@@ -5,10 +5,100 @@
         <description>Godseraph's Blog - Godseraph</description>
         <link>http://godseraph.github.io</link>
         <link>http://godseraph.github.io</link>
-        <lastBuildDate>2013-08-11T23:29:04+08:00</lastBuildDate>
-        <pubDate>2013-08-11T23:29:04+08:00</pubDate>
+        <lastBuildDate>2013-08-16T21:37:11+08:00</lastBuildDate>
+        <pubDate>2013-08-16T21:37:11+08:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>Ubuntu 12.04 Server LTS安装部署Nginx+MySQL+Ruby1.9.3+Rails3.2</title>
+                <description>&lt;h2 id='1'&gt;1、准备工作:&lt;/h2&gt;
+
+&lt;p&gt;//更新源&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$sudo apt-get update
+$sudo apt-get upgrade&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;//矫正时区&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$sudo dpkg-reconfigure tzdata
+选择Asia,然后选择shanghai。&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='2linux'&gt;2、安装所需的linux包:&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev  libxml2-dev libxslt-dev autoconf libc6-dev zlib1g-dev libssl-dev build-essential curl git-core libc6-dev g++ gcc&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='3rails'&gt;3、为Rails添加用户和组:&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$sudo addgroup passenger			
+$sudo adduser godseraph			//已有此用户，则此步省略
+$sudo usermod -G passenger,www-data,sudo godseraph
+$su - godseraph&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='4ruby193'&gt;4、安装Ruby1.9.3:&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$bash &amp;lt; &amp;lt;(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)     //安装rvm控制ruby的版本
+$source .bashrc      //首次需要加载rvm
+$rvm –v             //查看rvm的版本
+$sudo vi ~/.bashrc  //打开bashrc文件，添加以下代码：
+    [[ -s &amp;quot;$HOME/.rvm/scripts/rvm&amp;quot; ]] &amp;amp;&amp;amp; . &amp;quot;$HOME/.rvm/scripts/rvm&amp;quot; 
+$source ～/.bashrc  //打开新终端运行bashrc
+$rvm install 1.9.3  //安装ruby,1.9.3为ruby的版本
+$rvm use 1.9.3 default  //设置1.9.3为默认的版本
+$ruby –v                //查看当前ruby的版本&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='5rubygemsrails32'&gt;5、安装rubygems,Rails3.2&lt;/h2&gt;
+
+&lt;p&gt;//安装libssl支持&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$sudo apt-get install openssl libssl-dev 
+$sudo apt-get install libopenssl-ruby1.9.1 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;//安装rubygems&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$rvm rubygems current		//Installing rubygems-2.0.6 for ruby-1.9.3-p448
+$gem install rails   		//安装rails最新版 
+$gem install rails --version 3.2.14	//安装rails 3.2.14版
+$rails -v   			//查看已安装rails版本,我的是rails 3.2.&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;参考资料： http://blog.sina.com.cn/s/blog_5d239b7f01019km9.html http://blog.it580.com/install-ruby-on-rails-on-ubuntu-12-04-1-lts http://ruby-china.org/wiki/install-rails-on-ubuntu-12-04-server&lt;/p&gt;</description>
+                <link>http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/14/Hello-Rails</link>
+                <guid>http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/14/Hello-Rails</guid>
+                <pubDate>2013-08-14T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>Ubuntu上视频转换的初步研究</title>
+                <description>&lt;h2 id='convert_mkv_to_mp4_in_ubuntu'&gt;Convert MKV to MP4 in Ubuntu：&lt;/h2&gt;
+
+&lt;p&gt;安装libav工具&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install libav-tools&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;不改变编码格式，将mkv转换为mp4格式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;avconv -i input.mkv -codec copy output.mp4
+
+测试时使用了《独立日》720p的mkv文件，转换后的mp4文件在VLC中正常播放且有声音，使用jwplayer播放ngnix输出的流媒体时没有声音，怀疑时原文件为6声道，jwplayer不支持。&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;查看mkv文件的封装信息&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install gpac mkvtoolnix ffmpeg
+mkvinfo xxx.mkv&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='vlc'&gt;使用VLC控件在浏览器上播放流媒体&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;object classid=&amp;quot;clsid:E23FE9C6-778E-49D4-B537-38FCDE4887D8&amp;quot; codebase=&amp;quot;http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab&amp;quot;
+    width=&amp;quot;&amp;lt;?php echo $_GET[&amp;quot;height&amp;quot;]; ?&amp;gt;&amp;quot; height=&amp;quot;&amp;lt;?php echo $_GET[&amp;quot;width&amp;quot;]; ?&amp;gt;&amp;quot; id=&amp;quot;vlc&amp;quot; events=&amp;quot;True&amp;quot;&amp;gt;
+&amp;lt;param name=&amp;quot;Src&amp;quot; value=&amp;quot;&amp;quot; /&amp;gt;
+&amp;lt;param name=&amp;quot;ShowDisplay&amp;quot; value=&amp;quot;True&amp;quot; /&amp;gt;
+&amp;lt;param name=&amp;quot;Loop&amp;quot; value=&amp;quot;False&amp;quot; /&amp;gt;
+&amp;lt;param name=&amp;quot;AutoPlay&amp;quot; value=&amp;quot;False&amp;quot; /&amp;gt;
+&amp;lt;/object&amp;gt;&lt;/code&gt;&lt;/pre&gt;</description>
+                <link>http://godseraph.github.io/%E6%B5%81%E5%AA%92%E4%BD%93%E6%8A%80%E6%9C%AF/2013/08/13/Hello-Mp4</link>
+                <guid>http://godseraph.github.io/%E6%B5%81%E5%AA%92%E4%BD%93%E6%8A%80%E6%9C%AF/2013/08/13/Hello-Mp4</guid>
+                <pubDate>2013-08-13T00:00:00+08:00</pubDate>
+        </item>
 
         <item>
                 <title>Domino与PHP实现SSO的初步研究</title>
@@ -63,6 +153,250 @@ chown -R www-data:www-data proxy_temp&lt;/code&gt;&lt;/pre&gt;</description>
                 <link>http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/09/Hello-Nginx</link>
                 <guid>http://godseraph.github.io/web%E6%8A%80%E6%9C%AF/2013/08/09/Hello-Nginx</guid>
                 <pubDate>2013-08-09T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>Mp4Demo:独立日</title>
+                <description>&lt;!DOCTYPE html&gt;
+&lt;!--[if lt IE 7 ]&gt; &lt;html class=&quot;lt_ie10 lt_ie9 lt_ie8 lt_ie7&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 7 ]&gt; &lt;html class=&quot;lt_ie10 lt_ie9 lt_ie8&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 8 ]&gt; &lt;html class=&quot;lt_ie10 lt_ie9&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 9 ]&gt; &lt;html class=&quot;lt_ie10 ie9&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if (gt IE 9)|!(IE)]&gt;&lt;!--&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;
+&lt;!--&lt;![endif]--&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;var NREUMQ=NREUMQ||[];NREUMQ.push([&quot;mark&quot;,&quot;firstbyte&quot;,new Date().getTime()]);&lt;/script&gt;
+&lt;link rel=&quot;canonical&quot; href=&quot;http://www.longtailvideo.com/jw-player/&quot; /&gt;
+&lt;meta http-equiv=&quot;x-dns-prefetch-control&quot; content=&quot;on&quot; /&gt;
+&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//s0-www.ltvimg.com http&quot; /&gt;
+&lt;link rel=&quot;shortcut icon&quot; href=&quot;/sites/all/themes/ltv/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
+&lt;meta name=&quot;description&quot; content=&quot;JW Player is the leading HTML5 &amp;amp; Flash video player, optimized for mobile and the desktop. Easy enough for beginners, advanced enough for pros.&quot; /&gt;
+&lt;title&gt;JW Player Overview | Best HTML5 &amp;amp; Flash Video Player | LongTail Video&lt;/title&gt;
+&lt;!-- CSS aggregated by CDN module. --&gt;
+&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; media=&quot;all&quot; href=&quot;http://s0-www.ltvimg.com/cdn/farfuture/E2YOAvXGP0Tg3V5pYBlmW4yo1d8XcsIS-QQ61Hudtbg/mtime:1375289705/sites/default/files/css/cdn_css_http_cfcf4d3792fa251a162c073301e90aff_codefilter.css&quot; /&gt;
+&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; media=&quot;all&quot; href=&quot;http://s1-www.ltvimg.com/cdn/farfuture/jv7eN9PsC30CistV1lVanaB6ky81L7-dpTZP9U6fqOE/mtime:1375289705/sites/default/files/css/cdn_css_cfcf4d3792fa251a162c073301e90aff.css&quot; /&gt;
+&lt;!-- CSS aggregated by CDN module. --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://s1-www.ltvimg.com/cdn/farfuture/L1plDWQOlsmLpMYBpVnaagUVUw2wk1gYB2xzhIok4lU/mtime:1375289698/sites/default/files/js/js_7a78e63b52c606c42ffe53433755cd64.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!--//--&gt;&lt;![CDATA[//&gt;&lt;!--
+jQuery.extend(Drupal.settings, { &quot;basePath&quot;: &quot;/&quot;, &quot;googleanalytics&quot;: { &quot;trackOutgoing&quot;: 1, &quot;trackMailto&quot;: 1, &quot;trackDownload&quot;: 1, &quot;trackDownloadExtensions&quot;: &quot;7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip&quot; } });
+//--&gt;&lt;!]]&gt;
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class=&quot;section_jwplayer page_jwplayer theme_ltv&quot; &gt;
+	
+	&lt;div id=&quot;Header&quot;&gt;
+
+
+&lt;div class=&quot;nav_bar product_site_nav&quot;&gt;
+	&lt;a href=&quot;/&quot; class=&quot;header_logo&quot;&gt;&lt;img src=&quot;/sites/all/themes/ltv/images/logo.png&quot; alt=&quot;LongTail Video&quot; title=&quot;LongTail Video&quot; /&gt;&lt;/a&gt;
+
+	&lt;ul class=&quot;top_nav&quot;&gt;
+		&lt;li&gt;&lt;a id=&quot;nav_item_jw&quot; href=&quot;http://www.longtailvideo.com/jw-player/&quot;&gt;JW Player&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a id=&quot;nav_item_botr&quot; href=&quot;http://www.longtailvideo.com/bits-on-the-run/&quot;&gt;Video Platform&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a id=&quot;nav_item_ads&quot; href=&quot;http://www.longtailvideo.com/video-ads/&quot;&gt;Video Ads&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+	
+	&lt;form id=&quot;searchform&quot; action=&quot;/jw/include/search_community.php&quot; method=&quot;post&quot;&gt;
+		&lt;fieldset class=&quot;clearfix&quot;&gt;
+			&lt;input type=&quot;text&quot; class=&quot;txtbox_search&quot; id=&quot;searchCommunity&quot; name=&quot;searchCommunity&quot; value=&quot;Search Support &amp;amp; Forums&quot; onfocus=&quot;if
+(this.value==this.defaultValue) this.value='';&quot; onblur=&quot;if
+(this.value=='') this.value='Search Support &amp;amp; Forums';&quot; /&gt;
+			&lt;button type=&quot;submit&quot; class=&quot;btn_search&quot; value=&quot;Go&quot;&gt;Go&lt;/button&gt;
+		&lt;/fieldset&gt;
+	&lt;/form&gt;
+	
+&lt;/div&gt;&lt;!-- /.product_site_nav --&gt;
+	&lt;/div&gt;&lt;!-- /#Header --&gt;
+	
+	
+		
+	&lt;div id=&quot;Container&quot; class=&quot;clearfix&quot;&gt;
+
+	
+	
+			&lt;div class=&quot;grid12 page_title&quot;&gt;
+			&lt;h1&gt;The web&amp;#039;s most popular video player&lt;/h1&gt;
+		&lt;/div&gt;
+	
+
+	
+		&lt;div class=&quot;grid12 content clearfix&quot;&gt;
+		
+&lt;h2&gt;Now with the most advanced features&lt;/h2&gt;
+
+&lt;div class=&quot;cta clearfix&quot;&gt;
+	&lt;div class=&quot;column c1&quot;&gt;&lt;h3&gt;JW Player&lt;sup class=&quot;trade&quot;&gt;TM&lt;/sup&gt;&lt;span class=&quot;version&quot;&gt;6&lt;/span&gt;&lt;/h3&gt;&lt;/div&gt;
+	&lt;div class=&quot;column c2&quot;&gt;&lt;span class=&quot;html5_flash_note&quot;&gt;For HTML5 &lt;em&gt;and Flash&lt;/em&gt;&lt;/span&gt;&lt;/div&gt;
+	&lt;div class=&quot;column c3&quot;&gt;&lt;a class=&quot;button green&quot; href=&quot;/jw-player/download/&quot;&gt;Get JW Player&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;!-- /.cta --&gt;
+
+&lt;div class=&quot;large_player&quot;&gt;
+	&lt;script src=&quot;http://jwpsrv.com/library/J1hI9n9qEeKVkCIACp8kUw.js&quot;&gt;&lt;/script&gt;
+	&lt;div id='player_1' class=&quot;video_holder&quot;&gt;
+		&lt;p&gt;To see this video, please enable JavaScript&lt;span class=&quot;old_browsers&quot;&gt; or upgrade to the latest HTML5 compatible browser&lt;/span&gt;.&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;script type='text/javascript'&gt;
+		jwplayer('player_1').setup({
+			file: &quot;http://192.168.0.104/dlr.mp4&quot;,
+			width: &quot;876&quot;,
+			height: &quot;470&quot;,
+			image: &quot;/content/images/jw-player/lWMJeVvV-876.jpg&quot;,
+                        logo: {
+                               file: &quot;http://p.jwpcdn.com/6/0/logo.png&quot;,
+                               link: &quot;http://www.longtailvideo.com/jwpabout/?a=l&amp;v=&quot; + jwplayer.version + &quot;&amp;m=f&amp;e=a&quot;
+                        },
+                        abouttext: &quot;JW Player &quot; + jwplayer.version, 
+                        aboutlink: &quot;http://www.longtailvideo.com/jwpabout/?a=r&amp;v=&quot; + jwplayer.version + &quot;&amp;m=f&amp;e=a&quot;,
+                        sharing: {
+                              code: encodeURI(&quot;&lt;iframe src='http://content.bitsontherun.com/videos/lWMJeVvV-364767.mp4' /&gt;&quot;),
+                              link: &quot;http://www.longtailvideo.com/jw-player/&quot;
+                       }
+		});
+	&lt;/script&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&quot;cta2&quot;&gt;
+	&lt;h3&gt;JW Player&lt;sup class=&quot;trade&quot;&gt;TM&lt;/sup&gt;&lt;span class=&quot;version&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;dual_mode&quot;&gt;HTML5 and Flash Dual Mode&lt;/span&gt;&lt;/h3&gt;
+	&lt;div&gt;&lt;a class=&quot;button green&quot; href=&quot;/jw-player/download/&quot;&gt;Get JW Player&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;		&lt;/div&gt;&lt;!-- /.grid12.content --&gt;
+		
+	
+	&lt;/div&gt;&lt;!-- /#Container --&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</description>
+                <link>http://godseraph.github.io/2013/08/08/Mp4-demo-2</link>
+                <guid>http://godseraph.github.io/2013/08/08/Mp4-demo-2</guid>
+                <pubDate>2013-08-08T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>Mp4Demo:东成西就</title>
+                <description>&lt;!DOCTYPE html&gt;
+&lt;!--[if lt IE 7 ]&gt; &lt;html class=&quot;lt_ie10 lt_ie9 lt_ie8 lt_ie7&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 7 ]&gt; &lt;html class=&quot;lt_ie10 lt_ie9 lt_ie8&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 8 ]&gt; &lt;html class=&quot;lt_ie10 lt_ie9&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 9 ]&gt; &lt;html class=&quot;lt_ie10 ie9&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if (gt IE 9)|!(IE)]&gt;&lt;!--&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;
+&lt;!--&lt;![endif]--&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;var NREUMQ=NREUMQ||[];NREUMQ.push([&quot;mark&quot;,&quot;firstbyte&quot;,new Date().getTime()]);&lt;/script&gt;
+&lt;link rel=&quot;canonical&quot; href=&quot;http://www.longtailvideo.com/jw-player/&quot; /&gt;
+&lt;meta http-equiv=&quot;x-dns-prefetch-control&quot; content=&quot;on&quot; /&gt;
+&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//s0-www.ltvimg.com http&quot; /&gt;
+&lt;link rel=&quot;shortcut icon&quot; href=&quot;/sites/all/themes/ltv/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
+&lt;meta name=&quot;description&quot; content=&quot;JW Player is the leading HTML5 &amp;amp; Flash video player, optimized for mobile and the desktop. Easy enough for beginners, advanced enough for pros.&quot; /&gt;
+&lt;title&gt;JW Player Overview | Best HTML5 &amp;amp; Flash Video Player | LongTail Video&lt;/title&gt;
+&lt;!-- CSS aggregated by CDN module. --&gt;
+&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; media=&quot;all&quot; href=&quot;http://s0-www.ltvimg.com/cdn/farfuture/E2YOAvXGP0Tg3V5pYBlmW4yo1d8XcsIS-QQ61Hudtbg/mtime:1375289705/sites/default/files/css/cdn_css_http_cfcf4d3792fa251a162c073301e90aff_codefilter.css&quot; /&gt;
+&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; media=&quot;all&quot; href=&quot;http://s1-www.ltvimg.com/cdn/farfuture/jv7eN9PsC30CistV1lVanaB6ky81L7-dpTZP9U6fqOE/mtime:1375289705/sites/default/files/css/cdn_css_cfcf4d3792fa251a162c073301e90aff.css&quot; /&gt;
+&lt;!-- CSS aggregated by CDN module. --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://s1-www.ltvimg.com/cdn/farfuture/L1plDWQOlsmLpMYBpVnaagUVUw2wk1gYB2xzhIok4lU/mtime:1375289698/sites/default/files/js/js_7a78e63b52c606c42ffe53433755cd64.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!--//--&gt;&lt;![CDATA[//&gt;&lt;!--
+jQuery.extend(Drupal.settings, { &quot;basePath&quot;: &quot;/&quot;, &quot;googleanalytics&quot;: { &quot;trackOutgoing&quot;: 1, &quot;trackMailto&quot;: 1, &quot;trackDownload&quot;: 1, &quot;trackDownloadExtensions&quot;: &quot;7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip&quot; } });
+//--&gt;&lt;!]]&gt;
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class=&quot;section_jwplayer page_jwplayer theme_ltv&quot; &gt;
+	
+	&lt;div id=&quot;Header&quot;&gt;
+
+
+&lt;div class=&quot;nav_bar product_site_nav&quot;&gt;
+	&lt;a href=&quot;/&quot; class=&quot;header_logo&quot;&gt;&lt;img src=&quot;/sites/all/themes/ltv/images/logo.png&quot; alt=&quot;LongTail Video&quot; title=&quot;LongTail Video&quot; /&gt;&lt;/a&gt;
+
+	&lt;ul class=&quot;top_nav&quot;&gt;
+		&lt;li&gt;&lt;a id=&quot;nav_item_jw&quot; href=&quot;http://www.longtailvideo.com/jw-player/&quot;&gt;JW Player&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a id=&quot;nav_item_botr&quot; href=&quot;http://www.longtailvideo.com/bits-on-the-run/&quot;&gt;Video Platform&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a id=&quot;nav_item_ads&quot; href=&quot;http://www.longtailvideo.com/video-ads/&quot;&gt;Video Ads&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+	
+	&lt;form id=&quot;searchform&quot; action=&quot;/jw/include/search_community.php&quot; method=&quot;post&quot;&gt;
+		&lt;fieldset class=&quot;clearfix&quot;&gt;
+			&lt;input type=&quot;text&quot; class=&quot;txtbox_search&quot; id=&quot;searchCommunity&quot; name=&quot;searchCommunity&quot; value=&quot;Search Support &amp;amp; Forums&quot; onfocus=&quot;if
+(this.value==this.defaultValue) this.value='';&quot; onblur=&quot;if
+(this.value=='') this.value='Search Support &amp;amp; Forums';&quot; /&gt;
+			&lt;button type=&quot;submit&quot; class=&quot;btn_search&quot; value=&quot;Go&quot;&gt;Go&lt;/button&gt;
+		&lt;/fieldset&gt;
+	&lt;/form&gt;
+	
+&lt;/div&gt;&lt;!-- /.product_site_nav --&gt;
+	&lt;/div&gt;&lt;!-- /#Header --&gt;
+	
+	
+		
+	&lt;div id=&quot;Container&quot; class=&quot;clearfix&quot;&gt;
+
+	
+	
+			&lt;div class=&quot;grid12 page_title&quot;&gt;
+			&lt;h1&gt;The web&amp;#039;s most popular video player&lt;/h1&gt;
+		&lt;/div&gt;
+	
+
+	
+		&lt;div class=&quot;grid12 content clearfix&quot;&gt;
+		
+&lt;h2&gt;Now with the most advanced features&lt;/h2&gt;
+
+&lt;div class=&quot;cta clearfix&quot;&gt;
+	&lt;div class=&quot;column c1&quot;&gt;&lt;h3&gt;JW Player&lt;sup class=&quot;trade&quot;&gt;TM&lt;/sup&gt;&lt;span class=&quot;version&quot;&gt;6&lt;/span&gt;&lt;/h3&gt;&lt;/div&gt;
+	&lt;div class=&quot;column c2&quot;&gt;&lt;span class=&quot;html5_flash_note&quot;&gt;For HTML5 &lt;em&gt;and Flash&lt;/em&gt;&lt;/span&gt;&lt;/div&gt;
+	&lt;div class=&quot;column c3&quot;&gt;&lt;a class=&quot;button green&quot; href=&quot;/jw-player/download/&quot;&gt;Get JW Player&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;!-- /.cta --&gt;
+
+&lt;div class=&quot;large_player&quot;&gt;
+	&lt;script src=&quot;http://jwpsrv.com/library/J1hI9n9qEeKVkCIACp8kUw.js&quot;&gt;&lt;/script&gt;
+	&lt;div id='player_1' class=&quot;video_holder&quot;&gt;
+		&lt;p&gt;To see this video, please enable JavaScript&lt;span class=&quot;old_browsers&quot;&gt; or upgrade to the latest HTML5 compatible browser&lt;/span&gt;.&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;script type='text/javascript'&gt;
+		jwplayer('player_1').setup({
+			file: &quot;http://192.168.0.104/2.m4v&quot;,
+			width: &quot;876&quot;,
+			height: &quot;470&quot;,
+			image: &quot;/content/images/jw-player/lWMJeVvV-876.jpg&quot;,
+                        logo: {
+                               file: &quot;http://p.jwpcdn.com/6/0/logo.png&quot;,
+                               link: &quot;http://www.longtailvideo.com/jwpabout/?a=l&amp;v=&quot; + jwplayer.version + &quot;&amp;m=f&amp;e=a&quot;
+                        },
+                        abouttext: &quot;JW Player &quot; + jwplayer.version, 
+                        aboutlink: &quot;http://www.longtailvideo.com/jwpabout/?a=r&amp;v=&quot; + jwplayer.version + &quot;&amp;m=f&amp;e=a&quot;,
+                        sharing: {
+                              code: encodeURI(&quot;&lt;iframe src='http://content.bitsontherun.com/videos/lWMJeVvV-364767.mp4' /&gt;&quot;),
+                              link: &quot;http://www.longtailvideo.com/jw-player/&quot;
+                       }
+		});
+	&lt;/script&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&quot;cta2&quot;&gt;
+	&lt;h3&gt;JW Player&lt;sup class=&quot;trade&quot;&gt;TM&lt;/sup&gt;&lt;span class=&quot;version&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;dual_mode&quot;&gt;HTML5 and Flash Dual Mode&lt;/span&gt;&lt;/h3&gt;
+	&lt;div&gt;&lt;a class=&quot;button green&quot; href=&quot;/jw-player/download/&quot;&gt;Get JW Player&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;		&lt;/div&gt;&lt;!-- /.grid12.content --&gt;
+		
+	
+	&lt;/div&gt;&lt;!-- /#Container --&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</description>
+                <link>http://godseraph.github.io/2013/08/08/Mp4-demo-1</link>
+                <guid>http://godseraph.github.io/2013/08/08/Mp4-demo-1</guid>
+                <pubDate>2013-08-08T00:00:00+08:00</pubDate>
         </item>
 
 

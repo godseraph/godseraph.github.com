@@ -5,6 +5,7 @@ category：Web技术
 tagline: "学习与实践"
 tags : [Ubuntu]
 ---
+{% include JB/setup %}
 
 最近几天将家里电脑和工作笔记本都安装上了Ubuntu 12.04 LTS，准备在这个环境下做以下方面的工作。
 -----------------

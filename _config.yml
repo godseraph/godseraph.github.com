@@ -10,7 +10,7 @@ pygments: true
 # so be sure to set them if your theme uses them.
 #
 title : Godseraph's Blog
-tagline: 发现问题 分析问题 解决问题 不制造问题
+tagline: 发现问题 分析问题 解决问题
 author :
   name : Godseraph
   email : wangjch@sina.com

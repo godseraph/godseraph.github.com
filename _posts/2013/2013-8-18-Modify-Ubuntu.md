@@ -1,22 +1,26 @@
 ---
 layout : post
-title : Ubuntu环境搭建
+title : Ubuntu开发环境
 category : Web技术
 tagline : "学习与实践"
 tags : [Ubuntu]
 ---
 {% include JB/setup %}
 
-最近几天将家里电脑和工作笔记本都安装上了Ubuntu 12.04 LTS，准备在这个环境下做以下方面的工作:
+
+
+最近想把几个研发项目的服务器端搭建在Linux环境上，因为对Ubuntu 12.04 LTS熟悉一些，所以在笔记本上搭建了Ubuntu Server 12.04虚拟环境，用于开发及测试，同时在AWS上也创建一个Ubuntu server 12.04的实例，作为发布服务器。
+
+以下是几个项目的介绍：
 -----------------
 
-* 1)写技术博客
-* 2)nginx，ror，python，mysql等技术的学习与实践
-* 3)自动化部署，虚拟化技术的学习与实践
+* 1)公司网站：以Joomla 2.5.1x作为内容管理系统
+* 2)Openfire即时通讯服务器
+* 3)流媒体服务器
 
 
 
-常用软件参考：
+参考文章：
 -----------
 
 * http://www.ansen.org/the-ubuntu-1204-lts-commonly-used-software.html
